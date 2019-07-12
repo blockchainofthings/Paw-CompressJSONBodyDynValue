@@ -8,6 +8,9 @@ This is a Dynamic Value Paw extension that is used to insert a JSON that is comp
 Define a Content-Encoding HTTP header and set its value. Then, define a text type body containing a single Compress
  JSON Body dynamic value. Enter the appropriate value for the JSON. As the value of the Content-Encoding HTTP header
  is set to either 'deflate' or 'gzip', the resulting JSON value in the body is compressed.
+ 
+Optionally, select the 'Format JSON' checkbox for the resulting JSON to be multi-line formatted (with 2-space
+ indentation).
 
 ## Development
 
