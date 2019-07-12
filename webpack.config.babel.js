@@ -4,7 +4,7 @@ const name = 'CompressJSONBodyDynValue';
 
 const config = {
     target: 'web',
-    mode: 'none',
+    mode: 'production',
     entry: [
         'immutable',
         './src/CompressJSONBodyDynValue.js'
