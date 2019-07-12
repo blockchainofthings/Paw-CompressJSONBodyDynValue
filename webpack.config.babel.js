@@ -4,26 +4,26 @@ const name = 'CompressJSONBodyDynValue';
 
 const config = {
     target: 'web',
+    mode: 'none',
     entry: [
         'immutable',
         './src/CompressJSONBodyDynValue.js'
     ],
     output:{
         path: path.resolve(__dirname, './build/com.blockchainofthings.PawExtensions.' + name),
-        pathInfo: true,
         publicPath: '/build/',
         filename: name + '.js'
     },
     module: {
-        loaders: [
-            {
+        rules: [{
+            use: [{
                 loader: 'babel-loader',
-                include: [
-                    path.resolve(__dirname, './src')
-                ],
-                test: /\.jsx?$/
-            }
-        ]
+            }],
+            include: [
+                path.resolve(__dirname, './src')
+            ],
+            test: /\.jsx?$/
+        }]
     }
 };
 
