@@ -9,7 +9,7 @@ class CompressJSONBodyDynValue {
     static identifier = 'com.blockchainofthings.PawExtensions.CompressJSONBodyDynValue';
     static title = 'Compress JSON Body';
     static inputs = [
-        DynamicValueInput('indentJson', 'Indent JSON', 'Checkbox', {
+        DynamicValueInput('formatJson', 'Format JSON', 'Checkbox', {
             defaultValue: false
         }),
         DynamicValueInput('jsonBody', 'JSON', 'JSON', {
@@ -18,7 +18,7 @@ class CompressJSONBodyDynValue {
     ];
 
     evaluate(context) {
-        let value = JSON.stringify(this.jsonBody, null, this.indentJson ? 2 : 0);
+        let value = JSON.stringify(this.jsonBody, null, this.formatJson ? 2 : 0);
         const request = context.getCurrentRequest();
 
         let encoding;
