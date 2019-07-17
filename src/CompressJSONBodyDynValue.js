@@ -9,6 +9,16 @@ class CompressJSONBodyDynValue {
     static identifier = 'com.blockchainofthings.PawExtensions.CompressJSONBodyDynValue';
     static title = 'Compress JSON Body';
     static inputs = [
+        DynamicValueInput('writeToFile', 'Write To File', 'Checkbox', {
+            defaultValue: false
+        }),
+        DynamicValueInput('hostname', 'Write File Host', 'String', {
+            defaultValue: 'localhost:8889',
+            placeholder: 'hostname:port'
+        }),
+        DynamicValueInput('filename', 'Output filename', 'String', {
+           defaultValue: 'restapi-body.txt'
+        }),
         DynamicValueInput('formatJson', 'Format JSON', 'Checkbox', {
             defaultValue: false
         }),
@@ -18,7 +28,7 @@ class CompressJSONBodyDynValue {
     ];
 
     evaluate(context) {
-        let value = JSON.stringify(this.jsonBody, null, this.formatJson ? 2 : 0);
+        let body = JSON.stringify(this.jsonBody, null, this.formatJson ? 2 : 0);
         const request = context.getCurrentRequest();
 
         let encoding;
@@ -26,16 +36,30 @@ class CompressJSONBodyDynValue {
         if ((encoding = request.getHeaderByName('Content-Encoding'))) {
             switch (encoding.toLowerCase()) {
                 case 'deflate':
-                    value = zlib.deflateSync(value);
+                    body = zlib.deflateSync(body);
                     break;
 
                 case 'gzip':
-                    value = zlib.gzipSync(value);
+                    body = zlib.gzipSync(body);
                     break;
             }
         }
 
-        return value;
+        if (this.writeToFile) {
+            // Call local HTTP service to write body contents to output file
+            const req = new NetworkHTTPRequest();
+
+            req.requestUrl = 'http://' + this.hostname + '/file/' + this.filename;
+            req.requestMethod = "POST";
+            req.requestTimeout = 15000;
+            req.requestBody = (Buffer.isBuffer(body) ? body : Buffer.from(body)).toString('base64');
+
+            req.setRequestHeader("Content-Type", "application/base64");
+
+            req.send();
+        }
+
+        return '';
     }
 
     title(context) {
