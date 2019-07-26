@@ -21,9 +21,9 @@ To have the body of a request set to a JSON value that is dynamically compressed
  body). Then check the *Write To File* option, and enter the appropriate value for the *JSON*.
  
 > **Note 1**: the Compress JSON Body dynamic value never returns the value of the entered JSON but rather stores it
- to the output file via the Write File Server application. Thus the *X-Box* header will always have an empty value.
+ to the output file via the Write File Server application. Thus the *X-Body* header will always have an empty value.
  
-> **Note 2**: to avoid interference with other dynamic value HTTP headers, it is recommended that the *X-Box* header be
+> **Note 2**: to avoid interference with other dynamic value HTTP headers, it is recommended that the *X-Body* header be
  the first HTTP header of the request.
  
 > **Note 3**: it is important that the *Write To File* option **only** be checked **after** the *Output Filename* is
